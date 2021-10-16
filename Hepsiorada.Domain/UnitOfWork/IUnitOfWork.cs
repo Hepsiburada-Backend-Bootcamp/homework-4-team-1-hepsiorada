@@ -12,7 +12,7 @@ namespace Hepsiorada.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         public IRepository<Order> OrderRepository { get; set; }
-        public IRepository<OrderDetails> OrderDetailsRepository { get; set; }
+        public IOrderDetailsRepository OrderDetailsRepository { get; set; }
         public IMongoOrderRepository OrderSummary { get; set; }
 
     }

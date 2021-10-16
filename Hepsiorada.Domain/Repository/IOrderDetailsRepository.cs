@@ -10,7 +10,7 @@ namespace Hepsiorada.Domain.Repository
     public interface IOrderDetailsRepository
     {
         Task<List<OrderDetails>> GetAll();
-        Task<OrderDetails> GetById(Guid id);
+        Task<OrderDetails> GetById(Guid ProductId, Guid OrderId);
         Task<OrderDetails> Add(OrderDetails entity);
         Task Update(OrderDetails entity);
         Task Delete(OrderDetails entity);

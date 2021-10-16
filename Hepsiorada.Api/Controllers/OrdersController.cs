@@ -1,5 +1,4 @@
-﻿using Hepsiorada.Api.Models;
-using Hepsiorada.Application.Commands.Order;
+﻿using Hepsiorada.Application.Commands.Order;
 using Hepsiorada.Application.Models;
 using Hepsiorada.Domain.Entities;
 using Mapster;
