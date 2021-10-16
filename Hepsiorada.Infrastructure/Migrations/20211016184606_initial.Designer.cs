@@ -4,14 +4,16 @@ using Hepsiorada.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hepsiorada.Infrastructure.Migrations
 {
     [DbContext(typeof(HepsiOradaDbContext))]
-    partial class HepsiOradaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211016184606_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,6 @@ namespace Hepsiorada.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -137,7 +136,7 @@ namespace Hepsiorada.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Hepsiorada.Domain.Entities.Product", "Product")
-                        .WithMany("OrderDetails")
+                        .WithMany("ProductOrders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -154,7 +153,7 @@ namespace Hepsiorada.Infrastructure.Migrations
 
             modelBuilder.Entity("Hepsiorada.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("ProductOrders");
                 });
 
             modelBuilder.Entity("Hepsiorada.Domain.Entities.User", b =>

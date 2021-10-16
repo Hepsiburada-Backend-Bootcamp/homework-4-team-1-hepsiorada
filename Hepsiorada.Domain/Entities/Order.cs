@@ -9,11 +9,6 @@ namespace Hepsiorada.Domain.Entities
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public int ProductQuantity { get; set; } //TODO
         public decimal TotalPrice { get; set; } //TODO
-
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
-        public ICollection<ProductOrder> ProductOrders { get; set; }
-
+        public Guid UserId { get; set; }
     }
 }

@@ -36,7 +36,13 @@ namespace Hepsiorada.Domain.Repository
                 parameters.Add("Price", Order.Price, DbType.Decimal);
 
                 var output = await cnn.ExecuteAsync(query, parameters);
+
+                foreach (var item in Order.OrderDetails)
+                {
+                    "INSERT INTO ODERDETAILS item "
+                }
             }
+
 
             return Order;
         }

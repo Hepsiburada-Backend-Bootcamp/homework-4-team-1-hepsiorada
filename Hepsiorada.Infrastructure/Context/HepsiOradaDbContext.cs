@@ -18,11 +18,11 @@ namespace Hepsiorada.Infrastructure.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ProductOrder> ProductOrders { get; set; }
+        public DbSet<OrderDetails> ProductOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductOrder>().HasKey(po => new { po.ProductId, po.OrderId });
+            modelBuilder.Entity<OrderDetails>().HasKey(po => new { po.ProductId, po.OrderId });
         }
 
 
