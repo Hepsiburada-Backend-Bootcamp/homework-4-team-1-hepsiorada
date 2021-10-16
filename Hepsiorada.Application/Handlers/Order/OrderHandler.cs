@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hepsiorada.Application.Commands.Order;
+using Hepsiorada.Application.Models;
+using Hepsiorada.Domain.Entities.MongoDB;
 using Hepsiorada.Domain.UnitOfWork;
 using Mapster;
 using MediatR;
 
 namespace Hepsiorada.Application.Handlers.Order
 {
-    public class OrderHandler : IRequestHandler<CreateOrderCommand, Domain.Entities.Order>
+    public class OrderHandler : IRequestHandler<CreateOrderCommand, OrderCreateDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -21,19 +23,24 @@ namespace Hepsiorada.Application.Handlers.Order
             
         }
 
-        public async Task<Domain.Entities.Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<OrderCreateDTO> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var blogPostEntity = request.Adapt<Domain.Entities.Order>();
+            var orderEntity = request.Adapt<Domain.Entities.Order>();
 
-            if (blogPostEntity == null)
+            if (orderEntity == null)
                 throw new ApplicationException($"Entity could not be mapped.");
 
             //Save entities to db
-            await this._unitOfWork.OrderRepository.Add(blogPostEntity);
+            await _unitOfWork.OrderRepository.Add(orderEntity);
 
+            foreach (var item in request.OrderDetails)
+            {
 
+            }
 
-            return blogPostEntity;
+            await _unitOfWork.OrderSummary.Add(new OrderSummary());
+
+            return request.Adapt<OrderCreateDTO>();//TODO 
         }
     }
 }

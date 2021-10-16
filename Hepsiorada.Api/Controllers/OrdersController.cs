@@ -1,5 +1,6 @@
 ﻿using Hepsiorada.Api.Models;
 using Hepsiorada.Application.Commands.Order;
+using Hepsiorada.Application.Models;
 using Hepsiorada.Domain.Entities;
 using Mapster;
 using MediatR;
@@ -26,8 +27,9 @@ namespace Hepsiorada.Api.Controllers
         {
             CreateOrderCommand createCommand = createDTO.Adapt<CreateOrderCommand>();
 
-            Order order = await _mediator.Send(createCommand);
+            OrderCreateDTO order = await _mediator.Send(createCommand);
 
+            return Ok(order);//TODO
         }
     }
 }

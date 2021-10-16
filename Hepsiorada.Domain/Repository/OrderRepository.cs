@@ -26,27 +26,17 @@ namespace Hepsiorada.Domain.Repository
                 cnn.Open();
 
                 string query
-                    = $"INSERT INTO Order (OrderName, Brand, Description, Stock, Price) VALUES (@OrderName, @Brand, @Description, @Stock, @Price)";
+                    = $"INSERT INTO Order (OrderDate, UserId) VALUES (@OrderDate, @UserId)";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("OrderName", Order.OrderName, DbType.String);
-                parameters.Add("Brand", Order.OrderName, DbType.String);
-                parameters.Add("Description", Order.Description, DbType.String);
-                parameters.Add("Stock", Order.Description, DbType.Int32);
-                parameters.Add("Price", Order.Price, DbType.Decimal);
+                parameters.Add("OrderDate", Order.OrderDate, DbType.DateTimeOffset);
+                parameters.Add("UserId", Order.UserId, DbType.Guid);
 
                 var output = await cnn.ExecuteAsync(query, parameters);
-
-                foreach (var item in Order.OrderDetails)
-                {
-                    "INSERT INTO ODERDETAILS item "
-                }
             }
-
 
             return Order;
         }
-
 
         //TODO If exists?
         public async Task Delete(Order Order)
@@ -98,14 +88,11 @@ namespace Hepsiorada.Domain.Repository
                 cnn.Open();
 
                 string query
-                = "UPDATE Order SET OrderName = @OrderName, Brand = @Brand, Description = @Description, Stock = @Stock, Price = @Price WHERE Id = @Id";
+                = "UPDATE Order SET OrderDate = @OrderDate, UserId = @UserId";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("OrderName", Order.OrderName, DbType.String);
-                parameters.Add("Brand", Order.OrderName, DbType.String);
-                parameters.Add("Description", Order.Description, DbType.String);
-                parameters.Add("Stock", Order.Description, DbType.Int32);
-                parameters.Add("Price", Order.Price, DbType.Decimal);
+                parameters.Add("OrderDate", Order.OrderDate, DbType.String);
+                parameters.Add("UserId", Order.UserId, DbType.String);
 
                 var output = await cnn.ExecuteAsync(query, parameters);
             }

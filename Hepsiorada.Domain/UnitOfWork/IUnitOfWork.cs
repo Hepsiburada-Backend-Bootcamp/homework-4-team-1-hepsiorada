@@ -1,4 +1,5 @@
 ﻿using Hepsiorada.Domain.Entities;
+using Hepsiorada.Domain.Entities.MongoDB;
 using Hepsiorada.Domain.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,8 @@ namespace Hepsiorada.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         public IRepository<Order> OrderRepository { get; set; }
+        public IRepository<OrderDetails> OrderDetailsRepository { get; set; }
+        public IMongoOrderRepository OrderSummary { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hepsiorada.Domain.Entities.MongoDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Hepsiorada.Domain.Repository
 {
     public interface IMongoOrderRepository
     {
-        Task Add()
+        Task Add(OrderSummary orderSummary);
+
+        Task<List<OrderSummary>> GetAll();
     }
 }
