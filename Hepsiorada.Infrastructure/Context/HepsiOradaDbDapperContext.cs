@@ -1,15 +1,19 @@
 using Microsoft.Extensions.Configuration;
 using Dapper;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using System;
+using System.Linq;
+using System.IO;
 
 namespace Hepsiorada.Infrastructure.Context
 {
     public class HepsiOradaDbDapperContext
     {
         private readonly IConfiguration Configuration;
-        public SQLiteService(IConfiguration configuration)
+        public HepsiOradaDbDapperContext(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.LogService = logService;
         }
         public List<T> GetAll<T>(string fromTable, string whereCondition = "")
         {
@@ -28,14 +32,11 @@ namespace Hepsiorada.Infrastructure.Context
 
                     var output = cnn.Query<T>(query);
 
-                    LogService.Log(SharedData.LogMessageSelectSuccess);
-
                     return output.ToList();
                 }
             }
             catch (Exception ex)
             {
-                LogService.Log(ex.Message);
                 return null;
             }
         }
@@ -44,7 +45,7 @@ namespace Hepsiorada.Infrastructure.Context
         {
             try
             {
-                using (IDbConnection cnn = new SqliteConnection(GetConnectionString()))
+                using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
                 {
                     cnn.Open();
 
@@ -75,21 +76,18 @@ namespace Hepsiorada.Infrastructure.Context
 
                     var output = cnn.Execute(query, model);
 
-                    LogService.Log(SharedData.LogMessageInsertSuccess);
-
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                LogService.Log(ex.Message);
                 return false;
             }
         }
 
         private string GetConnectionString()
         {
-            var x = Configuration.GetConnectionString("SQLite");
+            var x = Configuration.GetConnectionString("HepsiOradaDbContext");
             var c = Directory.GetCurrentDirectory();
             return x;
         }
