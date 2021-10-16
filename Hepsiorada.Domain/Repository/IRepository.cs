@@ -10,7 +10,7 @@ namespace Hepsiorada.Domain.Repository
     public interface IRepository<T> where T : BaseEntity
     {
         Task<List<T>> GetAll();
-        Task<T> GetById(int id);
+        Task<T> GetById(Guid id);
         Task<T> Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);
