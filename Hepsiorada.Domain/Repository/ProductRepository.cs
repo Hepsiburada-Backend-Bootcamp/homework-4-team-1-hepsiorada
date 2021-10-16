@@ -64,7 +64,7 @@ namespace Hepsiorada.Domain.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM Products";
+                string query = "SELECT * FROM Product";
 
                 return (await cnn.QueryAsync<Product>(query)).ToList();
             }
@@ -76,7 +76,7 @@ namespace Hepsiorada.Domain.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM Products WHERE Id = @Id";
+                string query = "SELECT * FROM Product WHERE Id = @Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Guid);

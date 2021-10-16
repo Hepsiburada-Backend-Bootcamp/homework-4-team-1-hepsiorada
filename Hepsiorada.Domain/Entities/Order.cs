@@ -7,8 +7,8 @@ namespace Hepsiorada.Domain.Entities
     public class Order : BaseEntity
     {
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
-        public int Quantity { get; set; }
-        public decimal TotalPrice { get; set; }
+        public int ProductQuantity { get; set; } //TODO
+        public decimal TotalPrice { get; set; } //TODO
 
         [ForeignKey("User")]
         public int UserId { get; set; }
