@@ -13,6 +13,6 @@ namespace Hepsiorada.Application.Commands.Order
     {
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public Guid UserId { get; set; }
-        public List<OrderDetails> OrderDetails { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
     }
 }

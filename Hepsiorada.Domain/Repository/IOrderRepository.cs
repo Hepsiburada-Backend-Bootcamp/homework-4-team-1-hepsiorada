@@ -9,6 +9,6 @@ namespace Hepsiorada.Domain.Repository
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        public Task<Order> AddOrderWithDetails(Order order, List<OrderDetails> orderDetailsList);
+        public Task<Order> AddOrderWithDetails(Order order, List<OrderDetail> orderDetailsList);
     }
 }

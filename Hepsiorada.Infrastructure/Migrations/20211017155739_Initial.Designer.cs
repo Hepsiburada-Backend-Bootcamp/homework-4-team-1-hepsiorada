@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hepsiorada.Infrastructure.Migrations
 {
     [DbContext(typeof(HepsiOradaDbContext))]
-    [Migration("20211016185106_second")]
-    partial class second
+    [Migration("20211017155739_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,9 +30,6 @@ namespace Hepsiorada.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -46,7 +43,7 @@ namespace Hepsiorada.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Hepsiorada.Domain.Entities.OrderDetails", b =>
+            modelBuilder.Entity("Hepsiorada.Domain.Entities.OrderDetail", b =>
                 {
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -57,14 +54,17 @@ namespace Hepsiorada.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("ProductUnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("ProductOrders");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Hepsiorada.Domain.Entities.Product", b =>
@@ -121,40 +121,31 @@ namespace Hepsiorada.Infrastructure.Migrations
 
             modelBuilder.Entity("Hepsiorada.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Hepsiorada.Domain.Entities.User", "User")
+                    b.HasOne("Hepsiorada.Domain.Entities.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Hepsiorada.Domain.Entities.OrderDetails", b =>
+            modelBuilder.Entity("Hepsiorada.Domain.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("Hepsiorada.Domain.Entities.Order", "Order")
+                    b.HasOne("Hepsiorada.Domain.Entities.Order", null)
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hepsiorada.Domain.Entities.Product", "Product")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Hepsiorada.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("Hepsiorada.Domain.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
                 });

@@ -39,7 +39,7 @@ namespace Hepsiorada.Infrastructure.Repository
             return order;
         }
 
-        public async Task<Order> AddOrderWithDetails(Order order, List<OrderDetails> orderDetailsList)
+        public async Task<Order> AddOrderWithDetails(Order order, List<OrderDetail> orderDetailsList)
         {
             using (IDbConnection cnn = new SqlConnection(ConnectionString))
             {
@@ -68,12 +68,12 @@ namespace Hepsiorada.Infrastructure.Repository
                         orderDetailsParameters.Add("ProductId", orderDetails.ProductId, DbType.Guid);
                         orderDetailsParameters.Add("OrderId", orderDetails.OrderId, DbType.Guid);
                         orderDetailsParameters.Add("ProductQuantity", orderDetails.ProductQuantity, DbType.String);
-                        orderDetailsParameters.Add("ProductUnitPrice", orderDetails.ProductQuantity, DbType.Decimal);
+                        orderDetailsParameters.Add("ProductUnitPrice", orderDetails.ProductUnitPrice, DbType.Decimal);
 
                         await cnn.ExecuteAsync(orderDetailsQuery, orderDetailsParameters);
 
                         ProductQuantity = ProductQuantity + orderDetails.ProductQuantity;
-                        TotalPrice = TotalPrice + (orderDetails.ProductQuantity * orderDetails.ProductUnitPrice);
+                        TotalPrice = TotalPrice + (orderDetails.ProductQuantity * orderDetails.Product.Price);
                     }
 
                     string updateQuery
@@ -85,7 +85,6 @@ namespace Hepsiorada.Infrastructure.Repository
                     updateParameters.Add("OrderId", order.Id, DbType.Guid);
 
                     order.TotalPrice = TotalPrice;
-                    order.ProductQuantity = ProductQuantity;
 
                     await cnn.ExecuteAsync(updateQuery, updateParameters, transaction: transaction);
 

@@ -41,7 +41,6 @@ namespace Hepsiorada.Application.Handlers.Order
 
             orderSummary.OrderId = order.Id.ToString();
             orderSummary.OrderDate = order.OrderDate;
-            orderSummary.ProductQuantity = order.ProductQuantity;
             orderSummary.TotalPrice = order.TotalPrice;
 
             orderSummary.UserId = user.Id.ToString();
