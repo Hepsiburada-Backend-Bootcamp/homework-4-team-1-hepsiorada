@@ -8,5 +8,6 @@ namespace Hepsiorada.Domain.Entities
         public Guid ProductId { get; set; }
         public Guid OrderId { get; set; }
         public int ProductQuantity { get; set; }
+        public decimal ProductUnitPrice { get; set; }
     }
 }

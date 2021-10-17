@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Hepsiorada.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -22,6 +22,7 @@ namespace Hepsiorada.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] OrderCreateDTO createDTO)
         {
             CreateOrderCommand createCommand = createDTO.Adapt<CreateOrderCommand>();

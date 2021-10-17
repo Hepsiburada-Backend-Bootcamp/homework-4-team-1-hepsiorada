@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hepsiorada.Application.Commands.Order;
 using Hepsiorada.Application.Models;
+using Hepsiorada.Domain.Entities;
 using Hepsiorada.Domain.Entities.MongoDB;
 using Hepsiorada.Domain.UnitOfWork;
 using Mapster;
@@ -33,12 +34,27 @@ namespace Hepsiorada.Application.Handlers.Order
             //Save entities to db
             await _unitOfWork.OrderRepository.Add(orderEntity);
 
-            foreach (var item in request.OrderDetails)
+            foreach (var orderDetails in request.OrderDetails)
             {
-
+                await _unitOfWork.OrderDetailsRepository.Add(orderDetails);
             }
 
-            await _unitOfWork.OrderSummary.Add(new OrderSummary());
+            OrderSummary orderSummary = new OrderSummary();
+            User user = await _unitOfWork.UserRepository.GetById(orderEntity.UserId);
+
+            orderSummary.OrderDate = orderEntity.OrderDate;
+            orderSummary.ProductQuantity = orderEntity.ProductQuantity;
+            orderSummary.TotalPrice = orderEntity.TotalPrice;
+
+            orderSummary.FirstName = user.FirstName;
+            orderSummary.LastName = user.LastName;
+            orderSummary.Email = user.Email;
+            orderSummary.Address = user.Address;
+            orderSummary.PhoneNumber = user.PhoneNumber;
+
+
+
+            await _unitOfWork.OrderSummary.Add(orderSummary);
 
             return request.Adapt<OrderCreateDTO>();//TODO 
         }

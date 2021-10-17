@@ -26,12 +26,13 @@ namespace Hepsiorada.Domain.Repository
                 cnn.Open();
 
                 string query
-                    = $"INSERT INTO OrderDetails (ProductId, OrderId, ProductQuantity) VALUES (@ProductId, @OrderId, @ProductQuantity)";
+                    = $"INSERT INTO OrderDetails (ProductId, OrderId, ProductQuantity, ProductUnitPrice) VALUES (@ProductId, @OrderId, @ProductQuantity, @ProductUnitPrice)";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("ProductId", orderDetails.ProductId, DbType.String);
                 parameters.Add("OrderId", orderDetails.OrderId, DbType.String);
                 parameters.Add("ProductQuantity", orderDetails.ProductQuantity, DbType.String);
+                parameters.Add("ProductUnitPrice", orderDetails.ProductQuantity, DbType.Decimal);
 
                 await cnn.ExecuteAsync(query, parameters);
             }
@@ -83,6 +84,36 @@ namespace Hepsiorada.Domain.Repository
             }
         }
 
+        public async Task<IEnumerable<OrderDetails>> GetByOrderId(Guid OrderId)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                string query = "SELECT * FROM OrderDetails WHERE OrderId = @OrderId";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("OrderId", OrderId, DbType.Guid);
+
+                return (await cnn.QueryAsync<IEnumerable<OrderDetails>>(query, parameters)).FirstOrDefault();
+            }
+        }
+
+        public async Task<IEnumerable<OrderDetails>> GetByProductId(Guid ProductId)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                string query = "SELECT * FROM OrderDetails WHERE ProductId = @ProductId";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("ProductId", ProductId, DbType.Guid);
+
+                return (await cnn.QueryAsync<IEnumerable<OrderDetails>>(query, parameters)).FirstOrDefault();
+            }
+        }
+
         public async Task Update(OrderDetails orderDetails)
         {
             using (IDbConnection cnn = new SqlConnection(ConnectionString))
@@ -90,12 +121,13 @@ namespace Hepsiorada.Domain.Repository
                 cnn.Open();
 
                 string query
-                = "UPDATE OrderDetails SET ProductId = @ProductId, OrderId = @OrderId, ProductQuantity = @ProductQuantity";
+                = "UPDATE OrderDetails SET ProductId = @ProductId, OrderId = @OrderId, ProductQuantity = @ProductQuantity, ProductUnitPrice = @ProductUnitPrice";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("ProductId", orderDetails.ProductId, DbType.String);
                 parameters.Add("OrderId", orderDetails.OrderId, DbType.String);
                 parameters.Add("ProductQuantity", orderDetails.ProductQuantity, DbType.String);
+                parameters.Add("ProductUnitPrice", orderDetails.ProductQuantity, DbType.Decimal);
 
                 await cnn.ExecuteAsync(query, parameters);
             }

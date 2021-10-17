@@ -11,6 +11,8 @@ namespace Hepsiorada.Domain.Repository
     {
         Task<List<OrderDetails>> GetAll();
         Task<OrderDetails> GetById(Guid ProductId, Guid OrderId);
+        Task<IEnumerable<OrderDetails>> GetByOrderId(Guid OrderId);
+        Task<IEnumerable<OrderDetails>> GetByProductId(Guid ProductId);
         Task<OrderDetails> Add(OrderDetails entity);
         Task Update(OrderDetails entity);
         Task Delete(OrderDetails entity);
