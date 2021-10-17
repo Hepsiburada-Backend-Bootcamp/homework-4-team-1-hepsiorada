@@ -14,7 +14,7 @@ namespace Hepsiorada.Domain.UnitOfWork
         public IOrderRepository OrderRepository { get; }
         public IRepository<User> UserRepository { get; }
         public IRepository<Product> ProductRepository { get; }
-        public IMongoOrderRepository OrderSummary { get; }
+        public IMongoOrderRepository OrderSummaryRepository { get; }
 
     }
 }

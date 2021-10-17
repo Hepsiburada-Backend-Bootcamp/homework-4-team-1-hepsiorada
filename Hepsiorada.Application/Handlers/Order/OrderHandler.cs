@@ -14,7 +14,8 @@ using MediatR;
 
 namespace Hepsiorada.Application.Handlers.Order
 {
-    public class OrderHandler : IRequestHandler<CreateOrderCommand, OrderCreateDTO>
+    public class OrderHandler :     IRequestHandler<CreateOrderCommand, OrderCreateDTO>,
+                                    IRequestHandler<GetOrderSummariesCommand, List<OrderSummary>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -69,14 +70,14 @@ namespace Hepsiorada.Application.Handlers.Order
                 }
             }
 
-            await _unitOfWork.OrderSummary.Add(orderSummary);
+            await _unitOfWork.OrderSummaryRepository.Add(orderSummary);
 
             return request.Adapt<OrderCreateDTO>();//TODO 
         }
 
         public async Task<List<OrderSummary>> Handle(GetOrderSummariesCommand request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.OrderSummary.GetAll();
+            return await _unitOfWork.OrderSummaryRepository.GetAll();
         }
     }
 }

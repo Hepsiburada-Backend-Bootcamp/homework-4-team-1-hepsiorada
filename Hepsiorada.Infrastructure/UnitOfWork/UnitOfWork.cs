@@ -22,7 +22,7 @@ namespace Hepsiorada.Infrastructure.UnitOfWork
         public IOrderRepository OrderRepository => _serviceProvider.GetService<IOrderRepository>();
         public IRepository<User> UserRepository => _serviceProvider.GetService<IRepository<User>>();
         public IRepository<Product> ProductRepository => _serviceProvider.GetService<IRepository<Product>>();
-        public IMongoOrderRepository OrderSummary => _serviceProvider.GetService<IMongoOrderRepository>();
+        public IMongoOrderRepository OrderSummaryRepository => _serviceProvider.GetService<IMongoOrderRepository>();
 
 
     }
