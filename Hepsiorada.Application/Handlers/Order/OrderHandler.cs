@@ -38,10 +38,12 @@ namespace Hepsiorada.Application.Handlers.Order
 
             User user = await _unitOfWork.UserRepository.GetById(orderEntity.UserId);
 
+            orderSummary.OrderId = order.Id.ToString();
             orderSummary.OrderDate = order.OrderDate;
             orderSummary.ProductQuantity = order.ProductQuantity;
             orderSummary.TotalPrice = order.TotalPrice;
 
+            orderSummary.UserId = user.Id.ToString();
             orderSummary.FirstName = user.FirstName;
             orderSummary.LastName = user.LastName;
             orderSummary.Email = user.Email;
