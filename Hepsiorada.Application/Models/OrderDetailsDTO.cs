@@ -8,7 +8,6 @@ namespace Hepsiorada.Application.Models
     public class OrderDetailsDTO
     {
         public Guid ProductId { get; set; }
-        public Guid OrderId { get; set; }
         public int ProductQuantity { get; set; }
     }
 }

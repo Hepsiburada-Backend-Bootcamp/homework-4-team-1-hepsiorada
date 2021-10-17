@@ -76,7 +76,8 @@ namespace Hepsiorada.Application.Handlers.Order
 
         public async Task<List<OrderSummary>> Handle(GetOrderSummariesCommand request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.OrderSummaryRepository.GetAll();
+            var x = await _unitOfWork.OrderSummaryRepository.GetAll();
+            return x;
         }
     }
 }

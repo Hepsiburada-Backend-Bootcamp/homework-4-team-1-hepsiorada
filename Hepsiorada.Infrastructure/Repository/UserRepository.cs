@@ -27,7 +27,7 @@ namespace Hepsiorada.Infrastructure.Repository
                 cnn.Open();
 
                 string query
-                    = $"INSERT INTO User (FirstName, LastName, Email, Address, PhoneNumber) VALUES (@FirstName, @LastName, @Email, @Address, @PhoneNumber)";
+                    = $"INSERT INTO Users (FirstName, LastName, Email, Address, PhoneNumber) VALUES (@FirstName, @LastName, @Email, @Address, @PhoneNumber)";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("FirstName", User.FirstName, DbType.String);
@@ -50,7 +50,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "DELETE FROM User WHERE Id = @Id";
+                string query = "DELETE FROM Users WHERE Id = @Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", User.Id, DbType.Guid);
@@ -65,7 +65,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM User";
+                string query = "SELECT * FROM Users";
 
                 return (await cnn.QueryAsync<User>(query)).ToList();
             }
@@ -77,7 +77,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM User WHERE Id = @Id";
+                string query = "SELECT * FROM Users WHERE Id = @Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Guid);
@@ -93,7 +93,7 @@ namespace Hepsiorada.Infrastructure.Repository
                 cnn.Open();
 
                 string query
-                = "UPDATE User SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Address = @Address, PhoneNumber = @PhoneNumber WHERE Id = @Id";
+                = "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Address = @Address, PhoneNumber = @PhoneNumber WHERE Id = @Id";
                 
                 var parameters = new DynamicParameters();
                 parameters.Add("FirstName", User.FirstName, DbType.String);

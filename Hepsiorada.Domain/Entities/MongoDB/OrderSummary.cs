@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Hepsiorada.Domain.Entities.MongoDB
@@ -14,6 +15,11 @@ namespace Hepsiorada.Domain.Entities.MongoDB
         {
             this.OrderLines = new List<OrderLines>();//TODO check
         }
+
+        [JsonIgnore]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
         #region UserInfo
         public string UserId { get; set; }

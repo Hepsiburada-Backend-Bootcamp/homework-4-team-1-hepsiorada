@@ -30,7 +30,7 @@ namespace Hepsiorada.Infrastructure.Repository
                 cnn.Open();
 
                 string query
-                    = $"INSERT INTO Order (OrderDate, UserId) VALUES (@OrderDate, @UserId)";
+                    = $"INSERT INTO Orders (OrderDate, UserId) VALUES (@OrderDate, @UserId)";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("OrderDate", order.OrderDate, DbType.DateTimeOffset);
@@ -51,9 +51,12 @@ namespace Hepsiorada.Infrastructure.Repository
                 using (var transaction = cnn.BeginTransaction())
                 {
                     string query
-                        = $"INSERT INTO Order (OrderDate, UserId) VALUES (@OrderDate, @UserId)";
+                        = $"INSERT INTO Orders (Id, OrderDate, UserId, TotalPrice) VALUES (@Id, @OrderDate, @UserId, 0)";
+
+                    Guid orderId = Guid.NewGuid();
 
                     var parameters = new DynamicParameters();
+                    parameters.Add("Id", orderId, DbType.Guid);
                     parameters.Add("OrderDate", order.OrderDate, DbType.DateTimeOffset);
                     parameters.Add("UserId", order.UserId, DbType.Guid);
 
@@ -64,23 +67,24 @@ namespace Hepsiorada.Infrastructure.Repository
                     foreach (var orderDetails in orderDetailsList)
                     {
                         string orderDetailsQuery
-                        = $"INSERT INTO OrderDetails (ProductId, OrderId, ProductQuantity, ProductUnitPrice) VALUES (@ProductId, @OrderId, @ProductQuantity, @ProductUnitPrice)";
+                        = $"INSERT INTO OrderDetails (Id, ProductId, OrderId, ProductQuantity, ProductUnitPrice) VALUES (@Id, @ProductId, @OrderId, @ProductQuantity, @ProductUnitPrice)";
 
                         Product product = await _productRepository.GetById(orderDetails.ProductId);
 
                         var orderDetailsParameters = new DynamicParameters();
+                        orderDetailsParameters.Add("Id", Guid.NewGuid(), DbType.Guid);
                         orderDetailsParameters.Add("ProductId", orderDetails.ProductId, DbType.Guid);
-                        orderDetailsParameters.Add("OrderId", orderDetails.OrderId, DbType.Guid);
+                        orderDetailsParameters.Add("OrderId", orderId, DbType.Guid);
                         orderDetailsParameters.Add("ProductQuantity", orderDetails.ProductQuantity, DbType.String);
                         orderDetailsParameters.Add("ProductUnitPrice", product.Price, DbType.Decimal);
 
-                        await cnn.ExecuteAsync(orderDetailsQuery, orderDetailsParameters);
+                        await cnn.ExecuteAsync(orderDetailsQuery, orderDetailsParameters, transaction: transaction);
 
                         TotalPrice = TotalPrice + (orderDetails.ProductQuantity * product.Price);
                     }
 
                     string updateQuery
-                            = $"UPDATE Order SET TotalPrice = @TotalPrice WHERE Id = @OrderId";
+                            = $"UPDATE Orders SET TotalPrice = @TotalPrice WHERE Id = @OrderId";
 
                     var updateParameters = new DynamicParameters();
                     updateParameters.Add("TotalPrice", TotalPrice, DbType.Decimal);
@@ -104,7 +108,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "DELETE FROM Order WHERE Id = @Id";
+                string query = "DELETE FROM Orders WHERE Id = @Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", Order.Id, DbType.Guid);
@@ -119,7 +123,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM Order";
+                string query = "SELECT * FROM Orders";
 
                 return (await cnn.QueryAsync<Order>(query)).ToList();
             }
@@ -131,7 +135,7 @@ namespace Hepsiorada.Infrastructure.Repository
             {
                 cnn.Open();
 
-                string query = "SELECT * FROM Order WHERE Id = @Id";
+                string query = "SELECT * FROM Orders WHERE Id = @Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Guid);
@@ -147,7 +151,7 @@ namespace Hepsiorada.Infrastructure.Repository
                 cnn.Open();
 
                 string query
-                = "UPDATE Order SET OrderDate = @OrderDate, UserId = @UserId";
+                = "UPDATE Orders SET OrderDate = @OrderDate, UserId = @UserId";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("OrderDate", Order.OrderDate, DbType.String);

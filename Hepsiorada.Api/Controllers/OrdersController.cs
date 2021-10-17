@@ -27,7 +27,6 @@ namespace Hepsiorada.Api.Controllers
         public async Task<IActionResult> GetOrdersSummaries()
         {
             GetOrderSummariesCommand getOrderSummariesCommand = new GetOrderSummariesCommand();
-
             List<OrderSummary> order = await _mediator.Send(getOrderSummariesCommand);
 
             return Ok(order);//TODO

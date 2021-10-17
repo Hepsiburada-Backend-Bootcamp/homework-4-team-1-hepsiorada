@@ -12,7 +12,7 @@ namespace Hepsiorada.Infrastructure.Module
         public static void RegisterInfrastructureServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IUnitOfWork, UnitOfWork.UnitOfWork>();
-            serviceCollection.AddTransient<IRepository<Order>, OrderRepository>();
+            serviceCollection.AddTransient<IOrderRepository, OrderRepository>();
             serviceCollection.AddTransient<IRepository<User>, UserRepository>();
             serviceCollection.AddTransient<IRepository<Product>, ProductRepository>();
             serviceCollection.AddTransient<IMongoOrderRepository, MongoOrderRepository>();
