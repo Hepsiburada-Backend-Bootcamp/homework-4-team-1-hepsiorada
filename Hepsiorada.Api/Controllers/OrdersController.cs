@@ -23,22 +23,22 @@ namespace Hepsiorada.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] OrderCreateDTO createDTO)
-        {
-            CreateOrderCommand createCommand = createDTO.Adapt<CreateOrderCommand>();
-
-            OrderCreateDTO order = await _mediator.Send(createCommand);
-
-            return Ok(order);//TODO
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetOrdersSummaries()
         {
             GetOrderSummariesCommand getOrderSummariesCommand = new GetOrderSummariesCommand();
 
             List<OrderSummary> order = await _mediator.Send(getOrderSummariesCommand);
+
+            return Ok(order);//TODO
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder([FromBody] OrderCreateDTO createDTO)
+        {
+            CreateOrderCommand createCommand = createDTO.Adapt<CreateOrderCommand>();
+
+            OrderCreateDTO order = await _mediator.Send(createCommand);
 
             return Ok(order);//TODO
         }

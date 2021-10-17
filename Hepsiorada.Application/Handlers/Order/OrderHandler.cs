@@ -52,7 +52,7 @@ namespace Hepsiorada.Application.Handlers.Order
 
             foreach (var orderDetails in request.OrderDetails)
             {
-                Product product = await _unitOfWork.ProductRepository.GetById(orderDetails.ProductId);
+                Domain.Entities.Product product = await _unitOfWork.ProductRepository.GetById(orderDetails.ProductId);
                 OrderLines orderLine = new OrderLines();
 
                 if (product != null)

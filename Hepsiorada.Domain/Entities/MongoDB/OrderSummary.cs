@@ -28,7 +28,6 @@ namespace Hepsiorada.Domain.Entities.MongoDB
         #region OrderHeaderInfo
 
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
-        public int ProductQuantity { get; set; } = 0;
         public decimal TotalPrice { get; set; } = 0;
         public string OrderId { get; set; }
 

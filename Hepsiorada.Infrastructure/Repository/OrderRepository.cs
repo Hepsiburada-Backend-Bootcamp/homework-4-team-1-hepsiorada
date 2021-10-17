@@ -77,10 +77,9 @@ namespace Hepsiorada.Infrastructure.Repository
                     }
 
                     string updateQuery
-                            = $"UPDATE Order SET ProductQuantity = @ProductQuantity, TotalPrice = @TotalPrice WHERE Id = @OrderId";
+                            = $"UPDATE Order SET TotalPrice = @TotalPrice WHERE Id = @OrderId";
 
                     var updateParameters = new DynamicParameters();
-                    updateParameters.Add("ProductQuantity", ProductQuantity, DbType.Int32);
                     updateParameters.Add("TotalPrice", TotalPrice, DbType.Decimal);
                     updateParameters.Add("OrderId", order.Id, DbType.Guid);
 
