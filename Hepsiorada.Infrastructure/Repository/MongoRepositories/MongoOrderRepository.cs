@@ -1,11 +1,12 @@
 ﻿using Hepsiorada.Domain.Entities.MongoDB;
+using Hepsiorada.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hepsiorada.Domain.Repository
+namespace Hepsiorada.Infrastructure.Repository.MongoRepositories
 {
     public class MongoOrderRepository : IMongoOrderRepository
     {

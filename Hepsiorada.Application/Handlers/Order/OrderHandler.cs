@@ -32,19 +32,15 @@ namespace Hepsiorada.Application.Handlers.Order
                 throw new ApplicationException($"Entity could not be mapped.");
 
             //Save entities to db
-            await _unitOfWork.OrderRepository.Add(orderEntity);
-
-            foreach (var orderDetails in request.OrderDetails)
-            {
-                await _unitOfWork.OrderDetailsRepository.Add(orderDetails);
-            }
+            Domain.Entities.Order order = await _unitOfWork.OrderRepository.AddOrderWithDetails(orderEntity, request.OrderDetails);
 
             OrderSummary orderSummary = new OrderSummary();
+
             User user = await _unitOfWork.UserRepository.GetById(orderEntity.UserId);
 
-            orderSummary.OrderDate = orderEntity.OrderDate;
-            orderSummary.ProductQuantity = orderEntity.ProductQuantity;
-            orderSummary.TotalPrice = orderEntity.TotalPrice;
+            orderSummary.OrderDate = order.OrderDate;
+            orderSummary.ProductQuantity = order.ProductQuantity;
+            orderSummary.TotalPrice = order.TotalPrice;
 
             orderSummary.FirstName = user.FirstName;
             orderSummary.LastName = user.LastName;
@@ -52,7 +48,24 @@ namespace Hepsiorada.Application.Handlers.Order
             orderSummary.Address = user.Address;
             orderSummary.PhoneNumber = user.PhoneNumber;
 
+            foreach (var orderDetails in request.OrderDetails)
+            {
+                Product product = await _unitOfWork.ProductRepository.GetById(orderDetails.ProductId);
+                OrderLines orderLine = new OrderLines();
 
+                if (product != null)
+                {
+                    orderLine.ProductName = product.ProductName;
+                    orderLine.Brand = product.Brand;
+                    orderLine.Description = product.Description;
+                    orderLine.Stock = product.Stock;
+                    orderLine.Price = product.Price;
+                    orderLine.ProductQuantity = orderDetails.ProductQuantity;
+                    orderLine.ProductUnitPrice = orderDetails.ProductUnitPrice;
+
+                    orderSummary.OrderLines.Add(orderLine);
+                }
+            }
 
             await _unitOfWork.OrderSummary.Add(orderSummary);
 

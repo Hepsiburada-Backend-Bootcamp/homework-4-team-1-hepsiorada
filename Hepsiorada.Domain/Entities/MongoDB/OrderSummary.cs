@@ -8,6 +8,11 @@ namespace Hepsiorada.Domain.Entities.MongoDB
 {
     public class OrderSummary
     {
+        public OrderSummary()
+        {
+            this.OrderLines = new List<OrderLines>();//TODO check
+        }
+
         #region UserInfo
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -25,7 +30,7 @@ namespace Hepsiorada.Domain.Entities.MongoDB
 
         #endregion
 
-        List<OrderLines> OrderLines { get; set; }
+        public List<OrderLines> OrderLines { get; set; }
 
     }
 }

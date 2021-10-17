@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Hepsiorada.Domain.Repository;
 
-namespace Hepsiorada.Domain.Repository
+namespace Hepsiorada.Infrastructure.Repository
 {
     public class ProductRepository : IRepository<Product>
     {
