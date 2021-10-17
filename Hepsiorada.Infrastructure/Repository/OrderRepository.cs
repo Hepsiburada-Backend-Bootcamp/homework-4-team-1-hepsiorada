@@ -14,10 +14,13 @@ namespace Hepsiorada.Infrastructure.Repository
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly IRepository<Product> _productRepository;
         private string ConnectionString;
-        public OrderRepository(IConfiguration configuration)
+
+        public OrderRepository(IConfiguration configuration, IRepository<Product> productRepository)
         {
             this.ConnectionString = configuration.GetConnectionString("HepsiOradaDbContext");
+            this._productRepository = productRepository;
         }
 
         public async Task<Order> Add(Order order)
@@ -56,7 +59,6 @@ namespace Hepsiorada.Infrastructure.Repository
 
                     var output = await cnn.ExecuteAsync(query, parameters, transaction: transaction);
 
-                    int ProductQuantity = 0;
                     decimal TotalPrice = 0;
 
                     foreach (var orderDetails in orderDetailsList)
@@ -64,16 +66,17 @@ namespace Hepsiorada.Infrastructure.Repository
                         string orderDetailsQuery
                         = $"INSERT INTO OrderDetails (ProductId, OrderId, ProductQuantity, ProductUnitPrice) VALUES (@ProductId, @OrderId, @ProductQuantity, @ProductUnitPrice)";
 
+                        Product product = await _productRepository.GetById(orderDetails.ProductId);
+
                         var orderDetailsParameters = new DynamicParameters();
                         orderDetailsParameters.Add("ProductId", orderDetails.ProductId, DbType.Guid);
                         orderDetailsParameters.Add("OrderId", orderDetails.OrderId, DbType.Guid);
                         orderDetailsParameters.Add("ProductQuantity", orderDetails.ProductQuantity, DbType.String);
-                        orderDetailsParameters.Add("ProductUnitPrice", orderDetails.ProductUnitPrice, DbType.Decimal);
+                        orderDetailsParameters.Add("ProductUnitPrice", product.Price, DbType.Decimal);
 
                         await cnn.ExecuteAsync(orderDetailsQuery, orderDetailsParameters);
 
-                        ProductQuantity = ProductQuantity + orderDetails.ProductQuantity;
-                        TotalPrice = TotalPrice + (orderDetails.ProductQuantity * orderDetails.Product.Price);
+                        TotalPrice = TotalPrice + (orderDetails.ProductQuantity * product.Price);
                     }
 
                     string updateQuery

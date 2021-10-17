@@ -10,6 +10,5 @@ namespace Hepsiorada.Domain.Entities
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public decimal TotalPrice { get; set; } = 0;
         public List<OrderDetail> OrderDetails { get; set; }
-
     }
 }
