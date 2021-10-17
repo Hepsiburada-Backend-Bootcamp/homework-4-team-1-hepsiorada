@@ -1,6 +1,7 @@
 ﻿using Hepsiorada.Application.Commands.Order;
 using Hepsiorada.Application.Models;
 using Hepsiorada.Domain.Entities;
+using Hepsiorada.Domain.Entities.MongoDB;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,16 @@ namespace Hepsiorada.Api.Controllers
             CreateOrderCommand createCommand = createDTO.Adapt<CreateOrderCommand>();
 
             OrderCreateDTO order = await _mediator.Send(createCommand);
+
+            return Ok(order);//TODO
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersSummaries()
+        {
+            GetOrderSummariesCommand getOrderSummariesCommand = new GetOrderSummariesCommand();
+
+            List<OrderSummary> order = await _mediator.Send(getOrderSummariesCommand);
 
             return Ok(order);//TODO
         }

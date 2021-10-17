@@ -13,6 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
+using Hepsiorada.Application.Handlers.Order;
+using System.Reflection;
+using Hepsiorada.Infrastructure.Module;
 
 namespace Hepsiorada.Api
 {
@@ -35,6 +39,9 @@ namespace Hepsiorada.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hepsiorada.Api", Version = "v1" });
             });
+
+            services.RegisterInfrastructureServices();
+            services.AddMediatR(typeof(OrderHandler).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

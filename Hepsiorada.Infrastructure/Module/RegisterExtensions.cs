@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Hepsiorada.Domain.UnitOfWork;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Hepsiorada.Infrastructure.Module
 {
@@ -6,6 +7,7 @@ namespace Hepsiorada.Infrastructure.Module
     {
         public static void RegisterInfrastructureServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }
 }

@@ -73,5 +73,10 @@ namespace Hepsiorada.Application.Handlers.Order
 
             return request.Adapt<OrderCreateDTO>();//TODO 
         }
+
+        public async Task<List<OrderSummary>> Handle(GetOrderSummariesCommand request, CancellationToken cancellationToken)
+        {
+            return await _unitOfWork.OrderSummary.GetAll();
+        }
     }
 }
