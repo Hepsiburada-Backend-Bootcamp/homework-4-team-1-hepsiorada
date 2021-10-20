@@ -4,13 +4,10 @@ using Hepsiorada.Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Hepsiorada.Tests.DomainRepositoryTest.OrderTest
+namespace Hepsiorada.Tests.RepositoryTest.OrderTest
 {
     public class OrderRepositoryTest
     {
