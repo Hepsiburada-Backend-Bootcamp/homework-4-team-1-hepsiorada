@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Api", "Hepsiorada.Api\Hepsiorada.Api.csproj", "{FD04A30C-3BF9-443B-BB5E-7CEAB2553D04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Api", "Hepsiorada.Api\Hepsiorada.Api.csproj", "{FD04A30C-3BF9-443B-BB5E-7CEAB2553D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Application", "Hepsiorada.Application\Hepsiorada.Application.csproj", "{34E976F5-E42B-4C5B-A5CC-93677BB1BE04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Application", "Hepsiorada.Application\Hepsiorada.Application.csproj", "{34E976F5-E42B-4C5B-A5CC-93677BB1BE04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Domain", "Hepsiorada.Domain\Hepsiorada.Domain.csproj", "{E225B237-32DC-431B-ADF2-405873E2AAEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Domain", "Hepsiorada.Domain\Hepsiorada.Domain.csproj", "{E225B237-32DC-431B-ADF2-405873E2AAEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Infrastructure", "Hepsiorada.Infrastructure\Hepsiorada.Infrastructure.csproj", "{258EE32F-DE32-465C-B190-665EFD6EE9E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Infrastructure", "Hepsiorada.Infrastructure\Hepsiorada.Infrastructure.csproj", "{258EE32F-DE32-465C-B190-665EFD6EE9E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Tests", "Hepsiorada.Tests\Hepsiorada.Tests.csproj", "{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
