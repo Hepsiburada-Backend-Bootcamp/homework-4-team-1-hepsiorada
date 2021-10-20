@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "Hepsiorada.GrpcService.Protos";
+import "google/protobuf/timestamp.proto";
+
+service OrderRpc {
+  rpc GetOrders (OrderFilter) returns (OrderMessage);
+}
+
+message OrderFilter {
+  string user_id = 1;
+  string order_id = 2;
+}
+
+message OrderMessage {
+	OrderDetailMessage order = 1;
+}
+message OrderDetailMessage{
+	string message = 1;
+	string first_name =2;
+	string last_name=3;
+	string email =4;
+	string address=5;
+	string phone_number=6;
+	google.protobuf.Timestamp order_date = 7;
+	double total_price = 8;
+	string order_id=9;
+	repeated OrderItemsMessage order_items = 10;
+}
+message OrderItemsMessage{
+	string product_name = 1;
+	string brand =2;
+	string description=3;
+	int32 stock=4;
+	double price=5;
+	int32 product_quantity =6;
+    double product_unit_price =7;
+}
