@@ -27,9 +27,10 @@ namespace Hepsiorada.Infrastructure.Repository
                 cnn.Open();
 
                 string query
-                    = $"INSERT INTO Users (FirstName, LastName, Email, Address, PhoneNumber) VALUES (@FirstName, @LastName, @Email, @Address, @PhoneNumber)";
+                    = $"INSERT INTO Users (Id, FirstName, LastName, Email, Address, PhoneNumber) VALUES (@Id, @FirstName, @LastName, @Email, @Address, @PhoneNumber)";
 
                 var parameters = new DynamicParameters();
+                parameters.Add("Id", Guid.NewGuid(), DbType.Guid);
                 parameters.Add("FirstName", User.FirstName, DbType.String);
                 parameters.Add("LastName", User.LastName, DbType.String);
                 parameters.Add("Email", User.Email, DbType.String);
@@ -94,13 +95,14 @@ namespace Hepsiorada.Infrastructure.Repository
 
                 string query
                 = "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Address = @Address, PhoneNumber = @PhoneNumber WHERE Id = @Id";
-                
+
                 var parameters = new DynamicParameters();
                 parameters.Add("FirstName", User.FirstName, DbType.String);
                 parameters.Add("LastName", User.LastName, DbType.String);
                 parameters.Add("Email", User.Email, DbType.String);
                 parameters.Add("Address", User.Address, DbType.String);
                 parameters.Add("PhoneNumber", User.PhoneNumber, DbType.String);
+                parameters.Add("Id", User.Id, DbType.Guid);
 
                 var output = await cnn.ExecuteAsync(query, parameters);
             }

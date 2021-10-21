@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Hepsiorada.GrpcService
 {
@@ -19,6 +20,7 @@ namespace Hepsiorada.GrpcService
         private readonly ILogger<OrderSummaryService> _logger;
         public OrderSummaryService(IMediator mediator, ILogger<OrderSummaryService> logger)
         {
+            _mediator = mediator;
             _logger = logger;
         }
         public override async Task<OrderMessage> GetOrders(OrderFilter request, ServerCallContext context)
@@ -26,21 +28,23 @@ namespace Hepsiorada.GrpcService
 
             GetOrderSummariesCommand getOrderSummariesCommand = new GetOrderSummariesCommand();
             List<OrderSummary> order = await _mediator.Send(getOrderSummariesCommand);
-            _ = TypeAdapterConfig<OrderSummary, OrderDetailMessage>.NewConfig()
-                .Map(dest => dest.OrderItems, src => src.OrderLines);
-            OrderDetailMessage m = order.Adapt<OrderDetailMessage>();
-            //var order = new OrderMessage()
-            //{
-            //    Order = new OrderDetailMessage()
-            //    {
-            //        Address = "adres deneme",
-            //        Email = "email"
-            //    }
-            //};
+            //_ = TypeAdapterConfig<OrderSummary, OrderDetailMessage>.NewConfig()
+            //    .Map(dest => dest.OrderItems, src => src.OrderLines);
 
-            //order.Order.OrderItems.Clear();
-            //order.Order.OrderItems.Add(new OrderItems() { Brand = "brand" });
-            return await Task.FromResult(new OrderMessage() { Order = m });
+            //OrderDetailMessage m = order.Adapt<OrderDetailMessage>();
+            OrderMessage o = new OrderMessage();
+            foreach (var item in order)
+            {
+                var or = item.Adapt<OrderDetailMessage>();
+                or.OrderDate = Timestamp.FromDateTimeOffset(item.OrderDate);//date mapping is wrong
+                foreach (var item2 in item.OrderLines)
+                {
+                    or.OrderItems.Add(item2.Adapt<OrderItemsMessage>());
+                }
+                o.Order.Add(or);
+            }
+
+            return await Task.FromResult(o);
         }
     }
 }

@@ -13,7 +13,7 @@ message OrderFilter {
 }
 
 message OrderMessage {
-	OrderDetailMessage order = 1;
+	repeated OrderDetailMessage order = 1;
 }
 message OrderDetailMessage{
 	string message = 1;

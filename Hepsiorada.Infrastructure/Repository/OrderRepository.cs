@@ -54,7 +54,7 @@ namespace Hepsiorada.Infrastructure.Repository
                         = $"INSERT INTO Orders (Id, OrderDate, UserId, TotalPrice) VALUES (@Id, @OrderDate, @UserId, 0)";
 
                     Guid orderId = Guid.NewGuid();
-
+                    order.Id = orderId;
                     var parameters = new DynamicParameters();
                     parameters.Add("Id", orderId, DbType.Guid);
                     parameters.Add("OrderDate", order.OrderDate, DbType.DateTimeOffset);
