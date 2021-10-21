@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Hepsiorada.Infrastructure.Repository
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository,IRepository<Order>
     {
         private readonly IRepository<Product> _productRepository;
         private string ConnectionString;

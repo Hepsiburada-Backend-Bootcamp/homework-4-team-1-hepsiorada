@@ -11,6 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Domain", "Hepsio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Infrastructure", "Hepsiorada.Infrastructure\Hepsiorada.Infrastructure.csproj", "{258EE32F-DE32-465C-B190-665EFD6EE9E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.Tests", "Hepsiorada.Tests\Hepsiorada.Tests.csproj", "{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hepsiorada.Infrastructure", "Hepsiorada.Infrastructure\Hepsiorada.Infrastructure.csproj", "{258EE32F-DE32-465C-B190-665EFD6EE9E8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.GrpcService", "Hepsiorada.GrpcService\Hepsiorada.GrpcService.csproj", "{C6C50F3A-F9D6-447F-8460-36FC27229B54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hepsiorada.GrpcTestClient", "Hepsiorada.GrpcTestClient\Hepsiorada.GrpcTestClient.csproj", "{1B121FBA-20DA-4FC7-BFEB-0C93188AE85B}"
@@ -37,14 +40,10 @@ Global
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258EE32F-DE32-465C-B190-665EFD6EE9E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6C50F3A-F9D6-447F-8460-36FC27229B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6C50F3A-F9D6-447F-8460-36FC27229B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6C50F3A-F9D6-447F-8460-36FC27229B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C50F3A-F9D6-447F-8460-36FC27229B54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B121FBA-20DA-4FC7-BFEB-0C93188AE85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B121FBA-20DA-4FC7-BFEB-0C93188AE85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B121FBA-20DA-4FC7-BFEB-0C93188AE85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B121FBA-20DA-4FC7-BFEB-0C93188AE85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AD60FC-383B-4A72-B5BE-57D05DCC09C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
