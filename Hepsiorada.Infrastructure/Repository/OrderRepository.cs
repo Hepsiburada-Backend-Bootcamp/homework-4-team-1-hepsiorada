@@ -129,6 +129,68 @@ namespace Hepsiorada.Infrastructure.Repository
             }
         }
 
+        public async Task<List<Order>> GetAll(params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+                
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Orders");
+
+                return (await cnn.QueryAsync<Order>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<Order>> GetAll(string filter)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT * FROM Orders WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<Order>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<Order>> GetAll(string filter, params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Orders");
+                querySB.Append(" WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<Order>(querySB.ToString())).ToList();
+            }
+        }
+
         public async Task<Order> GetById(Guid id)
         {
             using (IDbConnection cnn = new SqlConnection(ConnectionString))

@@ -72,6 +72,67 @@ namespace Hepsiorada.Infrastructure.Repository
             }
         }
 
+        public async Task<List<User>> GetAll(params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Users");
+
+                return (await cnn.QueryAsync<User>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<User>> GetAll(string filter)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT * FROM Users WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<User>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<User>> GetAll(string filter, params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Users");
+                querySB.Append(" WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<User>(querySB.ToString())).ToList();
+            }
+        }
         public async Task<User> GetById(Guid id)
         {
             using (IDbConnection cnn = new SqlConnection(ConnectionString))

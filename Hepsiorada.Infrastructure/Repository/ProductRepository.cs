@@ -72,6 +72,68 @@ namespace Hepsiorada.Infrastructure.Repository
             }
         }
 
+        public async Task<List<Product>> GetAll(params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+                
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Products");
+
+                return (await cnn.QueryAsync<Product>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<Product>> GetAll(string filter)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT * FROM Products WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<Product>(querySB.ToString())).ToList();
+            }
+        }
+
+        public async Task<List<Product>> GetAll(string filter, params string[] columns)
+        {
+            using (IDbConnection cnn = new SqlConnection(ConnectionString))
+            {
+                cnn.Open();
+
+                StringBuilder querySB = new StringBuilder();
+                querySB.Append("SELECT ");
+
+
+                foreach (var column in columns)
+                {
+                    querySB.Append(column);
+                    querySB.Append(",");
+                }
+
+                querySB.Remove(querySB.Length, 1);
+                querySB.Append(" FROM Products");
+                querySB.Append(" WHERE ");
+                querySB.Append(filter);
+
+                return (await cnn.QueryAsync<Product>(querySB.ToString())).ToList();
+            }
+        }
+
         public async Task<Product> GetById(Guid id)
         {
             using (IDbConnection cnn = new SqlConnection(ConnectionString))
