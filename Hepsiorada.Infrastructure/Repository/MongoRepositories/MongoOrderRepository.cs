@@ -35,7 +35,6 @@ namespace Hepsiorada.Infrastructure.Repository.MongoRepositories
         public async Task<OrderSummary> GetById(string orderId) =>
             (await _orders.FindAsync(order => order.OrderId == orderId)).FirstOrDefault();
 
-
         public async Task Update(string orderId, OrderSummary orderIn) =>
             await _orders.ReplaceOneAsync(order => order.OrderId == orderId, orderIn);
 

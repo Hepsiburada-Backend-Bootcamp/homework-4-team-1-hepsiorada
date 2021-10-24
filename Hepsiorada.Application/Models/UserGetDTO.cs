@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hepsiorada.Application.Models
 {
-    public class UserDTO
+    public class UserGetDTO
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

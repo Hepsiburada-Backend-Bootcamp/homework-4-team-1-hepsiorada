@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Hepsiorada.Application.Commands.User
 {
-    public class GetUsersCommand : IRequest<List<UserGetDTO>>
+    public class GetSingleUserCommand : IRequest<UserGetDTO>
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

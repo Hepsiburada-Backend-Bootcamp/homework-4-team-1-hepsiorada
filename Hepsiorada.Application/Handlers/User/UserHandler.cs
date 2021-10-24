@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 namespace Hepsiorada.Application.Handlers.Product
 {
     public class UserHandler : IRequestHandler<CreateUserCommand, Unit>,
-                                  IRequestHandler<GetUsersCommand, List<UserDTO>>
+                                  IRequestHandler<GetUsersCommand, List<UserGetDTO>>,
+                                  IRequestHandler<GetSingleUserCommand, UserGetDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -36,9 +37,14 @@ namespace Hepsiorada.Application.Handlers.Product
             return Unit.Value;
         }
 
-        public async Task<List<UserDTO>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
+        public async Task<List<UserGetDTO>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
         {
-            return (await _unitOfWork.UserRepository.GetAll()).Adapt<List<UserDTO>>();
+            return (await _unitOfWork.UserRepository.GetAll()).Adapt<List<UserGetDTO>>();
+        }
+
+        public async Task<UserGetDTO> Handle(GetSingleUserCommand request, CancellationToken cancellationToken)
+        {
+            return (await _unitOfWork.UserRepository.GetById(request.Id)).Adapt<UserGetDTO>();
         }
     }
 }

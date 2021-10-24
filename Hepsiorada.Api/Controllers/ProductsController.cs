@@ -30,6 +30,17 @@ namespace Hepsiorada.Api.Controllers
             return Ok(products);//TODO
         }
 
+        [HttpGet("Id")]
+        public async Task<IActionResult> GetProducts(Guid Id)
+        {
+            GetSingleProductCommand getProductCommand = new GetSingleProductCommand();
+            getProductCommand.Id = Id;
+
+            ProductGetDTO product = await _mediator.Send(getProductCommand);
+
+            return Ok(product);//TODO
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct(
             [FromBody] ProductCreateDTO productDTO

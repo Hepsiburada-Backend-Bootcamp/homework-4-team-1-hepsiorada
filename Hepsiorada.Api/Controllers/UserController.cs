@@ -26,9 +26,20 @@ namespace Hepsiorada.Api.Controllers
         public async Task<IActionResult> GetUsers()
         {
             GetUsersCommand getUsersCommand = new GetUsersCommand();
-            List<UserDTO> users = await _mediator.Send(getUsersCommand);
+            List<UserGetDTO> users = await _mediator.Send(getUsersCommand);
 
             return Ok(users);//TODO
+        }
+
+        [HttpGet("Id")]
+        public async Task<IActionResult> GetUsers(Guid Id)
+        {
+            GetSingleUserCommand getSingleUserCommand = new GetSingleUserCommand();
+            getSingleUserCommand.Id = Id;
+
+            UserGetDTO user = await _mediator.Send(getSingleUserCommand);
+
+            return Ok(user);//TODO
         }
 
         [HttpPost]

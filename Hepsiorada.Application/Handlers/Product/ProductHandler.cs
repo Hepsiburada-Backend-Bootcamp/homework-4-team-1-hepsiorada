@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace Hepsiorada.Application.Handlers.Product
 {
     public class ProductHandler : IRequestHandler<CreateProductCommand, ProductCreateDTO>,
-                                  IRequestHandler<GetProductsCommand, List<ProductGetDTO>>
+                                  IRequestHandler<GetProductsCommand, List<ProductGetDTO>>,
+                                  IRequestHandler<GetSingleProductCommand, ProductGetDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -38,6 +39,11 @@ namespace Hepsiorada.Application.Handlers.Product
         public async Task<List<ProductGetDTO>> Handle(GetProductsCommand request, CancellationToken cancellationToken)
         {
             return (await _unitOfWork.ProductRepository.GetAll()).Adapt<List<ProductGetDTO>>();
+        }
+        
+        public async Task<ProductGetDTO> Handle(GetSingleProductCommand request, CancellationToken cancellationToken)
+        {
+            return (await _unitOfWork.ProductRepository.GetById(request.Id)).Adapt<ProductGetDTO>();
         }
     }
 }
